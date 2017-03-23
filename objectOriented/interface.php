@@ -1,6 +1,7 @@
 <?php
 // 类的方法必须有实现，接口的方法必须为空.
 // 对象接口interface
+// 抽象类
 interface ICanEat{
   // 接口里的方法不需要有方法的实现
   public function eat($food);
@@ -42,4 +43,23 @@ class Human1 implements ICanPee {
   public function pee(){}
   public function eat($food){}
 }
+
+// 抽象类，使用关键字abstract定义
+abstract class ACanEat {
+  // 定义抽象方法使用abstract,并且不需要具体的实现
+  abstract public function eatA($food);
+  public function breath(){
+    echo '<br> Breath use air.';
+  }
+}
+// 继承抽象类使用关键字extends
+class Human2 extends ACanEat {
+  // 继承抽象类中的抽象方法需要实现具体方法
+  public function eatA($food) {
+    echo '<br> Human eating '.$food;
+  }
+}
+$man = new Human2();
+$man->eatA('Appel');
+$man->breath();
 ?>
