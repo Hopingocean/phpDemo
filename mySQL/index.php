@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿<?php
 header('Content-type:text/html; charset:utf-8');
+=======
+<?php
+>>>>>>> 904f8e303d354574299ffbdf16428dfbbcf9dc45
 // 连接MySQL数据库
 $host = 'localhost';
 $user = 'root';
@@ -16,7 +20,11 @@ if(mysql_select_db('test')) {
   echo '<br>数据库连接失败';
 }
 // 在数据库中创建表格
+<<<<<<< HEAD
 $students = "create table students
+=======
+$students = "create table Students
+>>>>>>> 904f8e303d354574299ffbdf16428dfbbcf9dc45
   (
     name varchar(15),
     age int,
@@ -43,7 +51,11 @@ echo '<br>'.mysql_insert_id();
 // 执行MySQL查询
 mysql_query("set names 'utf8'");
 // 从数据库中的表Students表中取数据，如果执行成功，返回的是资源标识符
+<<<<<<< HEAD
 $res = mysql_query('select * from students');
+=======
+$res = mysql_query('select * from Students');
+>>>>>>> 904f8e303d354574299ffbdf16428dfbbcf9dc45
 // 返回查询到的资源的第一条数据
 $row = mysql_fetch_row($res);
 echo '<br>'.print_r($row);

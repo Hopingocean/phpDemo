@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿<?php
+=======
+<?php
+>>>>>>> 904f8e303d354574299ffbdf16428dfbbcf9dc45
   require('../../connect.php');
   print_r($_POST);
   $title = $_POST['title'];
