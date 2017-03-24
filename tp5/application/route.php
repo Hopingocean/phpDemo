@@ -11,7 +11,7 @@
 
 // use think\Route;
 
-// Route::rule('hello/:name', 'admin/userListDate/hello');
+// Route::rule('hello/:name', 'admin/test/hello');
 // 定义闭包
 // Route::rule('hello/:name', function ($name) {
 //     return 'Hello '.$name.'!';
@@ -24,22 +24,25 @@ return [
         'city' => '\w+',
         'year' => '\d{4}',
         'month' => '\d{2}',
+        'id' => '\d+',
+
     ],
     // 路由规则定义
-    // '[userList]'   => [
-    //     ':city'   => ['admin/userListDate/userList', ['method' => 'get'], ['city' => '\w+']],
-    //     ':name' => ['admin/userListDate/userList', ['method' => 'post'], ['name' => '\w+']],
-    // ],
-    // 添加路由规则，路由到UserListDate控制器的hello操作方法
+    '[userList]'   => [
+        ':city'    => 'admin/Test/userList',
+        ':name'    => 'admin/Test/userList',
+    ],
+    // 添加路由规则，路由到Test控制器的hello操作方法
     // 当路由规则以$结尾的时候就表示当前路由规则需要完整匹配
-    // 'hello/[:name]$' => 'admin/userListDate/hello',
+    'hello/[:name]$' => 'admin/Test/hello',
     
     // 定义闭包,闭包函数的参数就是路由规则中定义的变量
     // 'hello/[:name]' => function ($name) {
     //     return 'Hello '.$name.'!';
     // },
 
-    // 'blog/:year/:month' => ['blog/archive', ['method' => 'get'], ['year' => '\d{4}', 'month' => '\d{2}']],
-    // 'blog/:id'          => 'blog/get',
-    // 'blog/:name'        => 'blog/read',
+    'blog/:year/:month' => ['test/Blog/archive', ['method' => 'get'], ['year' => '\d{4}', 'month' => '\d{2}']],
+    'blog/:id'          => 'test/Blog/get',
+    'blog/:name'        => 'test/Blog/read',
 ];
+// ThinkPHP5.0的路由规则定义是从根目录开始，而不是基于模块名的.
