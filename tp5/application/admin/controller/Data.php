@@ -30,7 +30,7 @@ class Data extends Controller {
       // 服务器地址
       'hostname' => '127.0.0.1',
       // 数据库名
-      'database' => 'demo',
+      'database' => 'test',
       // 数据库用户名
       'username' => 'root',
       // 数据库密码
@@ -45,7 +45,7 @@ class Data extends Controller {
     dump($result);
 
     // 采用字符串方式切换数据库（无法定义数据表前缀和连接参数）
-    $result = Db::connect('mysql://root:15937074793@127.0.0.1:3306/demo#utf8')->query('select * from think_data where id = 1');
+    $result = Db::connect('mysql://root:15937074793@127.0.0.1:3306/test#utf8')->query('select * from think_data where id = 1');
     dump($result);
 
     // 通常在配置文件中定义多个数据库的连接配置（application/config.php）

@@ -44,5 +44,14 @@ return [
     'blog/:year/:month' => ['test/Blog/archive', ['method' => 'get'], ['year' => '\d{4}', 'month' => '\d{2}']],
     'blog/:id'          => 'test/Blog/get',
     'blog/:name'        => 'test/Blog/read',
+
+    // 模型与关联
+    'user/index' => 'admin/user/index',
+    'user/create' => 'admin/user/create',
+    'user/add' => 'admin/user/add',
+    'user/add_list' => 'admin/user/addList',
+    'user/update/:id' => 'admin/user/update',
+    'user/delete/:id' => 'admin/user/delete',
+    'user/:id' => 'admin/user/read',
 ];
 // ThinkPHP5.0的路由规则定义是从根目录开始，而不是基于模块名的.
