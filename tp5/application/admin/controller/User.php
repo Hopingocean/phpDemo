@@ -124,6 +124,7 @@ class User extends Controller {
     foreach ($list as $user) {
       echo $user['nickname'].'<br>';
       echo $user['email'].'<br>';
+      // echo $user['nick'];
       echo '-------------------<br>';
     }
   }
@@ -326,4 +327,54 @@ class User extends Controller {
     // 8.5 输出json
     echo $user->toJson();
   }
+
+  // 七：视图和模板
+  // 7.1 模板输出 -> public function indexModel() {}
+  public function indexModel() {
+    /*
+    $list = UserModel::all();
+    $this->assign('list', $list);
+    $this->assign('count', count($list));
+    return $this->fetch();
+    */
+    // assign()可以把任何类型的变量复制给模板，不同的变量类型需要采用不同的标签输出
+    // fetch()默认渲染输出的模板文件应该是当前控制器和操作对应的模板
+    // display()渲染内容
+    // engine()初始化模板引擎
+
+    // 分页输出列表，每页显示3条数据
+    $list = UserModel::paginate(3);
+    $this->assign('list', $list);
+    // 动态使用布局
+    $this->view->engine->layout('layout', '[__CONTENT__]');
+    // 临时关闭布局,或者直接在模板文件开头加上{__NOLAYOUT__}标签
+    $this->view->engine->layout(false);
+    return $this->fetch('list');
+  }
+  // 7.2 分页输出，修改indexModel函数
+  // 7.3 模板定位,模板文件名可以隨意命名，fetch('../../list'),可以设置多级目录
+  // 模板相关的参数可以直接在配置文件中配置template参数
+  // 7.4 模板布局，可以进一步简化模板定义
+  // 首先需要定义一个布局模板文件，application/admin/view/layout.html
+  // 在indexModel模板文件中开头定义layout标签，表示当前模板使用了布局，布局模板文件为layout.html,布局模板中的{__CONTENT__}会自动替换为解析后的list.html内容
+  // 如果所有模板文件都统一使用布局，并且都是同一个布局模板，那么可以统一配置
+  // 'template' => [
+  //   'layout_on' => true,
+  //   'layout_name' => 'layout',
+  //   'layout_item' => '[__CONTENT__]'
+  // ]
+  // 标签定制
+  // 'template' => [
+  //   //标签库标签
+  //   'taglib_begin' => '<',
+  //   'taglib_end' => '>'
+  // ]
+  // 7.5 输出替换，把资源文件独立出来，并在模板文件中引入
+
+
+  // 八：调试和日志
+  // 8.1 开启页面trace并设置显示trace信息的方式
+  // 8.2 异常页面
+  // 8.3 断点调试，dump():变量调试输出，halt():变量调试并中断输出，trace():控制台输出
+  // 8.4 日志分析
 }

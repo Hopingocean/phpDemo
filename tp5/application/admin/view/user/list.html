@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>[title]</title>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  {layout name='layout' /}
+  <!--模板输出-->
+  
+  <!--分页输出-->
+  <h2>用户列表（{$list->total()}）</h2>
+  {volist name='list' id='user'}
+  ID:{$user.id}<br>
+  昵称：{$user.nickname}<br>
+  邮箱：{$user.email}<br>
+  生日：{$user.birthday}<br>
+  ---------------------------<br>
+  {/volist}
+  {$list->render()}
+</body>
+
+</html>
