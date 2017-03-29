@@ -14,7 +14,7 @@ class User extends Validate {
   // 如果验证规则里使用了|,为了避免混淆则必须用数组方式定义验证规则
   protected $rule = [
     ['nickname', 'require|min:5', '昵称必须|昵称不能短于5个字符'],
-    ['email', 'email', '邮箱格式错误'],
+    ['email', 'checkMail:', '邮箱格式错误'],
     ['birthday', 'dateFormat:Y-m-d', '生日格式错误'],
   ];
   // 自定义验证规则,也支持返回动态的错误信息

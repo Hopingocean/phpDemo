@@ -2,8 +2,13 @@
 namespace app\admin\controller;
 
 // 在当前文件中给 app\admin\model\User模型定义了一个别名UserModel是为了避免和当前的app\admin\controller\User产生冲突，如果你当前的控制器类不是 User的话可以不需要定义UserModel别名。
+use app\admin\model\Profile;
+use app\admin\model\Book;
+use app\admin\model\Role;
 use app\admin\model\User as UserModel;
+
 use think\Controller;
+// use think\Validate;
 
 // 六：模型和关联
 class User extends Controller {
@@ -33,7 +38,7 @@ class User extends Controller {
     }
   }
   // 或者使用另外一种方法给对象赋值
-  public function add() {
+  public function add2() {
     // $user['nickname'] = '看云';
     // $user['email'] = 'kancloud@qq.com';
     // $user['birthday'] = strtotime('2015-03-09');
@@ -48,9 +53,14 @@ class User extends Controller {
     // 控制器验证
     $data = input('post.');
     $result = $this->validate($data, 'User');
-    if (true != $result) {
+    if (true !== $result) {
       return $result;
     } 
+    // 单独验证birthday是否有效的日期
+    $checkBirthday = Validate::is($data['birthday'], 'date');
+    if (false === $checkBirthday) {
+      return 'birthday日期格式非法';
+    }
     $user = new UserModel;
     if($user->allowField(true)->save($data)) {
       return '用户['. $user->nickname .':'. $user->id .']新增成功';
@@ -72,13 +82,14 @@ class User extends Controller {
     }
   }
   // 3.查询数据
-  public function read($id = '') {
+  public function read2($id) {
     // 模型的get方法用于获取数据表的数据并返回当前模型对象实例，通常只需传入主键作为参数
     $user = UserModel::get($id);
     echo $user->nickname.'<br>';
     echo $user->email.'<br>';
     // echo date('Y/m/d', $user->birthday).'<br>';
     echo $user->birthday.'<br>';
+
     // 也可以通过数组的方式访问对象实例
     echo $user['nickname'].'<br>';
     echo $user['email'].'<br>';
@@ -117,7 +128,7 @@ class User extends Controller {
     }
   }
   // 5.更新数据
-  public function update($id) {
+  public function update1($id) {
     $user['id'] = (int) $id;
     $user['nickname'] = '刘晨';
     $user['email'] = 'liu21st@gmail.com';
@@ -125,7 +136,7 @@ class User extends Controller {
     return '用户信息更新成功';
   }
   // 6.删除数据delete()、destroy()方法
-  public function delete($id) {
+  public function delete1($id) {
     $user = UserModel::get($id);
     // destroy()
     $result = UserModel::destroy($id);
@@ -141,5 +152,178 @@ class User extends Controller {
   public function create() {
     // view方法是系统封装的助手函数用于快速渲染模板文件，这里没有传入模板文件，则按照系统默认的解析规则会自动渲染当前操作方法对应的模板文件，也就是默认视图目录下user/create.html文件。
     return view(); // 同view('user/create')
+  }
+
+  // 7.关联
+  /*
+    *
+    创建数据表
+    DROP TABLE
+    IF EXISTS `think_user`;
+
+    CREATE TABLE
+    IF NOT EXISTS `think_user` (
+      `id` INT (6) UNSIGNED NOT NULL AUTO_INCREMENT,
+      `nickname` VARCHAR (25) NOT NULL,
+      `name` VARCHAR (25) NOT NULL,
+      `password` VARCHAR (50) NOT NULL,
+      `create_time` INT (11) UNSIGNED NOT NULL,
+      `update_time` INT (11) UNSIGNED NOT NULL,
+      `status` TINYINT (1) DEFAULT 0,
+      PRIMARY KEY (`id`)
+    ) ENGINE = MyISAM DEFAULT CHARSET = utf8;
+
+    DROP TABLE
+    IF EXISTS `think_profile`;
+
+    CREATE TABLE
+    IF NOT EXISTS `think_profile` (
+      `id` INT (6) UNSIGNED NOT NULL AUTO_INCREMENT,
+      `truename` VARCHAR (25) NOT NULL,
+      `birthday` INT (11) NOT NULL,
+      `address` VARCHAR (255) DEFAULT NULL,
+      `email` VARCHAR (255) DEFAULT NULL,
+      `user_id` INT (6) UNSIGNED NOT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE = MyISAM DEFAULT CHARSET = utf8;
+    *
+  */
+
+  // 7.1 一对一关联
+  // 关联写入
+  public function add() {
+    $user = new UserModel;
+    $user->name = 'thinkphp';
+    $user->password = '123456';
+    $user->nickname = '流年';
+    if ($user->save()) {
+      // 写入关联数据
+      $profile['truename'] = '刘晨';
+      $profile['birthday'] = '1977-03-05';
+      $profile['address'] = '浙江杭州';
+      $profile['email'] = 'thinkphp@qq.com';
+      $user->profile()->save($profile);
+      return '用户['. $user->name .']新增成功';
+    } else {
+      return $user->getError();
+    }
+  }
+  // 关联查询
+  public function read($id) {
+    $user = UserModel::get($id, 'profile');
+    echo $user->name.'<br>';
+    echo $user->nickname.'<br>';
+    echo $user->profile->truename.'<br>';
+    echo $user->profile->email.'<br>';
+  }
+  // 关联更新
+  public function update($id) {
+    $user = UserModel::get($id);
+    $user->name = 'framework';
+    if($user->save()) {
+      // 更新关联数据
+      $user->profile->email = 'liu21st@gmail.com';
+      $user->profile->save();
+      return '用户['. $user->name .']更新成功';
+    } else {
+      return $user->getError();
+    }
+  }
+  // 关联删除
+  public function delete($id) {
+    $user = UserModel::get($id);
+    if($user->delete()) {
+      // 删除关联数据
+      $user->profile->delete();
+      return '用户['. $user->name .']删除成功';
+    } else {
+      return $user->getError();
+    }
+  }
+
+  // 7.2 一对多关联
+  // 关联新增
+  public function addBook($id) {
+    $user = UserModel::get($id);
+    $books = [
+      ['title' => 'ThinkPHP5快速入门', 'publish_time' => '2016-05-06'],
+      ['title' => 'ThinkPHP5开发手册', 'publish_time' => '2016-03-06'],
+    ];
+    $user->books()->saveAll($books);
+    return '添加'.$user->name.'的书籍成功';
+  }
+  // 关联查询
+  public function readBook() {
+    // 查询有写过书的作者列表
+    $user = UserModel::has('books')->select();
+    dump($user);
+    // 查询写过三本书以上的作者
+    $user = UserModel::has('books', '>=', '3')->select();
+    dump($user);
+    // 查询写过ThinkPHP5快速入门的作者
+    $user = UserModel::hasWhere('books', ['title' => 'ThinkPHP5快速入门'])->select();
+    dump($user);
+  }
+  // 关联更新
+  public function updateBook($id) {
+    $user = UserModel::get($id);
+    $book = $user->books()->getByTitle('ThinkPHP5开发手册');
+    $book->title = 'ThinkPHP5';
+    $book->save();
+    echo $book->title.'<br>';
+  }
+  // 关联删除
+  public function deleteBook($id) {
+    $user = UserModel::get($id);
+    // 删除选中数据
+    $book = $user->books()->getById(4);
+    if($user->delete()) {
+      $book->delete();
+      echo '删除成功';
+    }
+  }
+
+  // 7.3 多对多关联
+  // 关联新增
+  public function addRole($id) {
+    $user = UserModel::getById($id);
+    // 给当前用户新增多个用户角色
+    $user->roles()->saveAll([
+      ['name' => 'leader', 'title' => '领导'],
+      ['name' => 'admin', 'title' => '管理员'],
+    ]);
+    $role = Role::getByName('admin');
+    // 添加枢纽标数据
+    $user->roles()->attach($role);
+    return '用户角色新增成功';
+  }
+  // 关联删除
+  public function deleteRole($id) {
+    $user = UserModel::getById($id);
+    $role = Role::getByName('admin');
+    // 删除关联数据并同时删除关联模型数据,detach方法会删除关联的枢纽表数据。
+    $user->roles()->detach($role, true);
+    return '用户角色删除成功';
+  }
+  // 关联查询
+  public function readRole($id) {
+    // 预载入查询
+    $user = UserModel::get($id, 'roles');
+    dump($user->roles);
+  }
+
+  // 8.模型输出
+  // 8.1 输出数组toArray
+  public function readModel($id) {
+    $user = UserModel::get($id);
+    dump($user->toArray());
+    // 8.2 隐藏属性
+    dump($user->hidden(['update_time', 'create_time'])->toArray());
+    // 8.3 指定属性
+    dump($user->visible(['id', 'nickname', 'email'])->toArray());
+    // 8.4 追加属性
+    // dump($user->append(['user_status'])->toArray());
+    // 8.5 输出json
+    echo $user->toJson();
   }
 }
