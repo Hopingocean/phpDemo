@@ -1,6 +1,7 @@
 <?php
 // 关联模型
-namespace app\admin\model;
+// namespace app\admin\model;
+namespace app\api\model;
 
 use think\Model;
 

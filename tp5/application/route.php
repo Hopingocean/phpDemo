@@ -9,9 +9,14 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-// use think\Route;
+// api版本号的传入方式：设置头信息、请求参数传入、路由方式
+use think\Route;
 
-// Route::rule('hello/:name', 'admin/test/hello');
+Route::rule(':version/user/:id', 'api/:version.User/read');
+
+// REST
+Route::resource('blogs', 'admin/blog');
+
 // 定义闭包
 // Route::rule('hello/:name', function ($name) {
 //     return 'Hello '.$name.'!';

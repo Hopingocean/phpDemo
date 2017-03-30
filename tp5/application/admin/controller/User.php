@@ -345,10 +345,11 @@ class User extends Controller {
     // 分页输出列表，每页显示3条数据
     $list = UserModel::paginate(3);
     $this->assign('list', $list);
+    // dump($list);
     // 动态使用布局
-    $this->view->engine->layout('layout', '[__CONTENT__]');
+    // $this->view->engine->layout('layout', '[__CONTENT__]');
     // 临时关闭布局,或者直接在模板文件开头加上{__NOLAYOUT__}标签
-    $this->view->engine->layout(false);
+    // $this->view->engine->layout(false);
     return $this->fetch('list');
   }
   // 7.2 分页输出，修改indexModel函数
@@ -370,11 +371,35 @@ class User extends Controller {
   //   'taglib_end' => '>'
   // ]
   // 7.5 输出替换，把资源文件独立出来，并在模板文件中引入
-
+  // 可以在输出之前对解析后的内容进行替换$this->view->replace(['__PUBLIC__' => '/static']),模板文件修改为<link rel="stylesheet" href="__PUBLIC__/common.css">
+  // 7.6 渲染内容：可以直接渲染内容或者读取数据库中存储的内容
+  /* 
+  *display()方法用于渲染内容而不是模板文件输出，和echo方法的区别是display()方法输出的内容支持模板标签的解析
+  $content = <<<EOT
+    <h2>用户列表（{\$count}）</h2>
+    <div>
+    {volist name="list" id="user" }
+    ID：{\$user.id}<br/>
+    昵称：{\$user.nickname}<br/>
+    邮箱：{\$user.email}<br/>
+    生日：{\$user.birthday}<br/>
+    ------------------------<br/>
+    {/volist}
+    </div>
+  EOT;
+  return $this->display($content);
+  */
+  // 7.7 助手函数view(),使用系统提供的助手函数简化模板渲染输出，不适用于内容渲染输出
+  // return view('', ['user' => $user], ['__PUBLIC__' => '/static']);
+  // 使用view助手函数，不需要继承think\Controller类，该方法的第一个参数就是渲染的模板表达式
 
   // 八：调试和日志
   // 8.1 开启页面trace并设置显示trace信息的方式
   // 8.2 异常页面
   // 8.3 断点调试，dump():变量调试输出，halt():变量调试并中断输出，trace():控制台输出
   // 8.4 日志分析
+
+  // 九：API开发
+  // 9.1 API版本，v1,v2
+  // 9.2 异常处理
 }
