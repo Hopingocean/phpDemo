@@ -108,6 +108,7 @@ class User extends Controller {
   // 4.数据列表，all方法
   public function index() {
     $list = UserModel::all();
+    $this->assign('list', $list);
     // 或者传入数组条件查询
     $list1 = UserModel::all(['status'=>1]);
     // 使用查询范围方法

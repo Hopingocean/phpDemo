@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-﻿<?php
-=======
 <?php
->>>>>>> 904f8e303d354574299ffbdf16428dfbbcf9dc45
   require('../../connect.php');
-  print_r($_POST);
   $title = $_POST['title'];
   $author = $_POST['author'];
   $introduce = $_POST['introduce'];
@@ -27,8 +22,11 @@
     ('$title', '$author', '$introduce', '$content', $dateline)
   ";
   if(mysql_query($insertSql)) {
-    echo "<script>alert('发布文章成功');window.location.href = '../article_add.html'</script>";
+    $showSql = mysql_query("select * from article");
+    $data = mysql_fetch_array($showSql);
+    print_r(json_encode($data));
   } else {
-    echo "<script>alert('发布失败');</script>";
+    // echo "<script>alert('发布失败');</script>";
+    echo '请求失败';
   }
 ?>
