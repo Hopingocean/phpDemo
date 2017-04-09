@@ -3,10 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>[title]</title>
+  <title></title>
   <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="">
 </head>
 
 <body>
@@ -22,9 +21,18 @@
   {/volist}
   {$list->render()}
 
+  <script src="__ROOT__/static/js/libs/jquery-2.1.4.js"></script>
   <script>
     // var list = <?php echo $list; ?>;
     // console.log(list);
+    
+    $.ajax({
+      url: '/tp5/application/admin/controller/User.php',
+      type: 'POST',
+      data: {},
+      success: function () {},
+      error: function () {console.log('error')}
+    });
   </script>
 </body>
 </html>
