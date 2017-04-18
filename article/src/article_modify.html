@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>添加文章</title>
+  <title>修改文章</title>
   <link rel="stylesheet" type="text/css" href="./css/libs/bootstrap.css">
   <link rel="stylesheet" href="./css/article_add.css">
 </head>
@@ -27,10 +27,11 @@
         <label for="content">内容</label>
         <textarea name="content" cols="30" rows="10"></textarea>
       </div>
-      <button class="btn btn-success">发表文章</button>
+      <input type="hidden" name="id">
+      <button class="btn btn-success" type="submit">提交修改</button>
     <!--</form>-->
   </div>
   <script src="./js/libs/jquery-2.1.4.js"></script>
-  <script src="./js/article_add.js"></script>
+  <script src="./js/article_modify.js"></script>
 </body>
 </html>

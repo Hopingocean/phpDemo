@@ -5,7 +5,7 @@
     echo mysql_error();
   }
   // 选择数据库
-  if(!mysql_select_db('demo')) {
+  if(!mysql_select_db('test')) {
     echo mysql_error();
   }
   // 字符集

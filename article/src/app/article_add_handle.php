@@ -8,11 +8,13 @@
   // 插入新表
   $article = "create table article
     (
+      id tinyint auto_increment,
       title varchar(100),
       author varchar(30),
       introduce varchar(1000),
       content varchar(1000),
-      dateline varchar(30)
+      dateline varchar(30),
+      primary key (id)
     )default charset = utf8";
   mysql_query($article, $con);
   // 在新表中插入数据

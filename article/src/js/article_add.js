@@ -18,13 +18,12 @@ $(document).ready(function () {
       }
     });
   });
-  // 页面加载请求默认数据
+  页面加载请求默认数据
   $.ajax({
     url: 'app/article_list_handle.php',
     type: 'GET',
     contentType: "application/x-www-form-urlencoded; charset=utf-8", 
     success: function (data) {
-      // var obj = JSON.stringify(data);
       console.log(data);
     },
     error: function (data) {
