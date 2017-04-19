@@ -5,4 +5,5 @@ var config = {
   articleList: 'app/article_list_handle.php',
   articleModify: 'app/article_modify_handle.php',
   articleAdd: 'app/article_add_handle.php',
+  articleSearch: 'app/article_search_handle.php'
 }

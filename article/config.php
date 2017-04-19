@@ -11,5 +11,6 @@
     mysql_error()打印相关的错误
     mysql_fetch_assoc()从结果集里取出数据
     mysql_num_rows()检测结果集是否为空
+    mysql_result($mysql, $row, $para)取出指定行数$row某个参数$para的值
   */
 ?>

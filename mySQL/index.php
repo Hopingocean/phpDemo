@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 header('Content-type:text/html; charset:utf-8');
 // 连接MySQL数据库
 $host = 'localhost';
@@ -24,15 +24,15 @@ $students = "create table Students
   )";
 mysql_query($students, $mysql);
 // 插入新数据到MySQL中
-// $name = 'www';
-// $age = '22';
-// $school = 'hdu';
-// $sql = "insert into 
-//   Students
-//   (name, age, school) 
-//   values
-//   ('$name', '$age', '$school')
-// ";
+$name = 'www';
+$age = '22';
+$school = 'hdu';
+$sql = "insert into 
+  Students
+  (name, age, school) 
+  values
+  ('$name', '$age', '$school')
+";
 if(mysql_query($sql)) {
   echo '<br> 插入成功';
 } else {
@@ -63,4 +63,12 @@ echo '<br>行数：'.mysql_num_rows($res);
 mysql_query('update students set age=36 where id=2');
 // 关闭数据库
 mysql_close($mysql);
+
+$var = 12;
+function multiply() {
+  global $var;
+  $var = $var * 10;
+}
+multiply();
+echo '<br>'.$var;
 ?>

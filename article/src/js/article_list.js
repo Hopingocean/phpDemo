@@ -40,6 +40,50 @@ $(document).ready(function () {
     });
   }
   getArticleList();
+  // 获取搜索文章列表
+  function getSearchArticleList() {
+    var searchVal = $('input[name="search"]').val();
+    $.ajax({
+      url: config.basePath + config.articleSearch,
+      type: 'GET',
+      data: {
+        searchVal: searchVal
+      },
+      success: function (data) {
+        var obj = JSON.parse(data);
+        console.log(obj);
+        for (var i = 0; i < obj.length; i++) {
+          var html = html
+            + "<tr>"
+            + "<td class='articleId'>"
+            + obj[i].id
+            + "</td>"
+            + "<td>"
+            + obj[i].title
+            + "</td>"
+            + "<td>"
+            + obj[i].author
+            + "</td>"
+            + "<td>"
+            + obj[i].introduce
+            + "</td>"
+            + "<td>"
+            + obj[i].content
+            + "</td>"
+            + "<td>"
+            + "<button class='btn btn-info btn-sm' type='button'>编辑</button>"
+            + "<button class='btn btn-danger btn-sm' type='button'>删除</button>"
+            + "</td>"
+            + "</tr>"
+            ;
+        }
+        $('tbody').html(html);
+      },
+      error: function (data) {
+        console.log(data);
+      }
+    });
+  }
   // 编辑文章
   $('.table').on('click', '.btn-info', function () {
     var id = $(this).parent().siblings('.articleId').text();
@@ -61,5 +105,9 @@ $(document).ready(function () {
         console.log(data);
       }
     });
+  })
+  // 搜索文章
+  $('#search').click(function () {
+    getSearchArticleList();
   })
 });
