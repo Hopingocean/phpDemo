@@ -8,12 +8,12 @@ $(document).ready(function () {
     info.introduce = $("textarea[name='introduce']").val();
     info.content = $("textarea[name='content']").val();
     $.ajax({
-      url: 'app/article_modify_handle.php',
+      url: config.basePath + config.articleModify,
       type: 'POST',
       data: info,
       success: function (data) {
         console.log(data);
-        window.location.href = 'article_list.html';
+        window.location.href = 'index.html';
       },
       error: function (data) {
         console.log(data);
@@ -21,9 +21,13 @@ $(document).ready(function () {
     });
   });
   // 页面加载请求默认数据
+  var id = getLocationSearch('id');
   $.ajax({
-    url: 'app/article_info_handle.php',
+    url: config.basePath + config.articleInfo,
     type: 'GET',
+    data: {
+      id: id
+    },
     success: function (data) {
       data = JSON.parse(data);
       console.log(data);

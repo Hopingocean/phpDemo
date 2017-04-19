@@ -4,23 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>文章</title>
+  <title>文章列表</title>
   <link rel="stylesheet" type="text/css" href="./css/libs/bootstrap.css">
   <link rel="stylesheet" href="./css/article_add.css">
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <ul class="nav nav-pills nav-stacked">
-          <li>文章列表</li>
-          <li>添加文章</li>
-        </ul>
-      </div>
-      <div class="col-md-8">
-        content
-      </div>
-    </div>
+  <div class="container-fluid">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Introduce</th>
+          <th>Content</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+    <!--新增按钮-->
+    <a class="btn btn-success" href="article_add.html" type="button">新增文章</a>
   </div>
+  <script src="./js/libs/jquery-2.1.4.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/article_list.js"></script>
 </body>
 </html>

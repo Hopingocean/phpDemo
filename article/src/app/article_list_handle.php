@@ -1,5 +1,11 @@
 <?php
 require('../../connect.php');
-$articleList = mysql_query("select * from article");
-$data = mysql_fetch_array($articleList);
+$query = mysql_query("select * from article order by dateline desc");
+if ($query && mysql_num_rows($query)) {
+  while ($row = mysql_fetch_assoc($query)) {
+    $data[] = $row;
+  }
+} else {
+  $data = array();
+}
 print_r(json_encode($data));
