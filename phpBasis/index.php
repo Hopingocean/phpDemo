@@ -114,9 +114,9 @@ echo $tip."<br>";
 echo $b7."<br>";
 echo $c7."<br>"; 
 // 5-8 PHP中的错误控制运算符
-ini_set('track_errors', 1);
-$conn = @mysql_connect("localhost", "username", "password");
-echo "出错了，错误原因是：".$php_errormsg."<br>";
+// ini_set('track_errors', 1);
+// $conn = @mysql_connect("localhost", "username", "password");
+// echo "出错了，错误原因是：".$php_errormsg."<br>";
 // 取模运算符
 $maxLine = 4;
 $no = 17;

@@ -71,7 +71,7 @@ function_exists('func');
 
 class_exists('class');
 
-file_exists(filename);
+// file_exists(filename);
 
 // 3-1 PHP类和对象
 // 定义一个类
@@ -394,7 +394,7 @@ echo "<br>".ltrim(' kongge ');
 // 4-5 PHP字符串之获取字符串的长度
 echo "<br>";
 
-echo mb_strlen($hello, "UTF8");
+// echo mb_strlen($hello, "UTF8");
 
 // 4-6 PHP字符串之字符串的截取
 // substr(string, start, len);
@@ -586,14 +586,14 @@ $_SESSION['userInfo'] = $userInfo;
 $secureKey = 'lmy'; // 加密密钥
 $str = serialize($userInfo); //将用户信息序列化
 // 用户信息加密前
-$str = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($secureKey), $str, MCRYPT_MODE_ECB));
+// $str = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($secureKey), $str, MCRYPT_MODE_ECB));
 // 用户信息加密后
 // 将加密后的信息存储的cookie中
 setcookie('userInfo', $str);
 echo '<br>加密后的用户信息：<br>';
 print_r($str);
 // 当需要使用时进行解密
-$str = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($secureKey), base64_decode($str), MCRYPT_MODE_ECB);
+// $str = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($secureKey), base64_decode($str), MCRYPT_MODE_ECB);
 $uInfo = unserialize($str);
 echo '<br>解密后的用户信息：<br>';
 print_r($uInfo);
