@@ -41,4 +41,28 @@
     is_writable();文件是否可写
   */
   /*创建文件*/
+  /*
+    * 读取文件夹大小
+    * 
+  */
+  function dirSize($path) {
+    global $sum;
+    $sum = 0;
+    $handle = opendir($path);
+    while(($item = readdir($handle)) !== false) {
+      if ($item != '.' && $item != '..') {
+        if (is_file($path. '/' .$item)) {
+          $sum += filesize($path. '/' .$item);
+        }
+        if (is_dir($path. '/' .$item)) {
+          $func = __FUNCTION__;
+          $func($path. '/' .$item);
+        }
+      }
+    }
+    closedir($handle);
+    return $sum;
+  }
+  $path = '../file';
+  echo '<br>'.dirSize($path).'B';
 ?>
