@@ -10,4 +10,4 @@ node_modules/
 *.njsproj
 *.sln
 release_version
-.tp5
+tp5
