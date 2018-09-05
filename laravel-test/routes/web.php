@@ -88,3 +88,8 @@ Route::get('query3', 'StudentController@query3');
 
 // 查询构造器(查询数据)
 Route::get('query4', 'StudentController@query4');
+
+// ORM
+Route::get('orm1', 'StudentController@orm1');
+Route::get('orm2', 'StudentController@orm2');
+Route::get('orm3', 'StudentController@orm3');

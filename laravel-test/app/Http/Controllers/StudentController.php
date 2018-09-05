@@ -3,6 +3,7 @@
 namespace App\http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\Students;
 
 class StudentController extends Controller {
   
@@ -73,6 +74,82 @@ class StudentController extends Controller {
 
   // 使用查询构造器查询数据
   public function query4 () {
-    
+    // $bool = DB::table('student') -> insert([
+    //   ['id' => 1001, 'name' => '张三', 'age' => '18'],
+    //   ['id' => 1002, 'name' => '李四', 'age' => '19'],
+    //   ['id' => 1003, 'name' => '王二', 'age' => '20'],
+    // ]);
+    // var_dump($bool);
+    // get()
+    $students = DB::table('student') -> get();
+    var_dump($students);
+    // first()
+    $firstStudent = DB::table('student')
+      ->orderBy('id', 'desc')
+      ->first();
+    var_dump($firstStudent);
+    // where()/whereRaw()
+    $searchStudent = DB::table('student')
+      -> whereRaw('id > ? and age > ?', [1001, 19])
+      -> get();
+    var_dump($searchStudent);
+    // pluck()
+    $names = DB::table('student')
+      -> pluck('name');
+    var_dump($names);
+    // lists()
+    // $id = DB::table('student')
+    //   -> lists('id', 'name');
+    // var_dump($id);
+    // select()
+    $selectList = DB::table('student')
+      -> select('id', 'name', 'age')
+      -> get();
+    var_dump($selectList);
+    // chunk()
+    // DB::table('student')
+    // -> chunk(2, function ($student) {
+    //   var_dump($student);
+    // });
+  }
+
+  // 聚合函数
+  function query5 () {
+    // count(), max(), min(), avg(), sum()
+  }
+
+  // Eluquent ORM
+  function orm1 () {
+    // all()
+    $students = Students::all();
+    // dd($students);
+    // find()
+    // findOrFail()
+    $s1 = Students::findOrFail('1001');
+    dd($s1);
+    // get()
+    // first()
+    // chunk()
+    // 聚合函数count() max() min() sum() avg()
+  }
+
+  function orm2() {
+    // 使用模型新增数据
+    $student = new Students();
+    $student->name = 'Lee';
+    $student->age = 18;
+    $student->save();
+
+    // create()
+    // findOrCreate()
+    // firstOrNew()
+
+  }
+
+  function orm3() {
+    // 使用模型更新数据
+    $student = Students::find(1);
+    $student->name = 'Lee001';
+    $student -> save();
   }
 }
