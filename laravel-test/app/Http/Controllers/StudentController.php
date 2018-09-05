@@ -151,5 +151,14 @@ class StudentController extends Controller {
     $student = Students::find(1);
     $student->name = 'Lee001';
     $student -> save();
+    // update(['key' => 'value'])
+  }
+
+  function orm4() {
+    // 通过模型删除delete()
+    $student = Students::find(1);
+    $student -> delete();
+    // 通过主键删除destroy(value)
+    Students::destroy([2, 3]);
   }
 }
