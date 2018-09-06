@@ -2,8 +2,10 @@
 
 namespace App\http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Students;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller {
   
@@ -160,5 +162,53 @@ class StudentController extends Controller {
     $student -> delete();
     // 通过主键删除destroy(value)
     Students::destroy([2, 3]);
+  }
+
+  function request1(Request $request) {
+    // 取值
+    $request -> input('name', 'null');
+    $request -> all();
+    // 请求类型
+    $request -> method();
+    $request -> ajax();
+    $request -> is('student/*'); // 是否符合格式
+    $request -> url(); // 当前url
+  }
+
+  function session1(Request $request) {
+    // Http Request session
+    $request -> session() -> put('key1', 'value1');
+    // session()
+    session() -> put('key2', 'value2');
+    // Session
+    Session::put('key3', 'value3');
+    echo Session::get('key3');
+    Session::put(['key4', 'value4']);
+    Session::push('key5', 'value5');
+    if (Session::has('key1')) {
+      Session::forget('key1');
+      echo '<br>'. Session::get('key1');
+    }
+    Session::flush(); // 删除所有值
+    dd(Session::all());
+  }
+
+  function response1() {
+    // 响应JSON
+    return response() -> json(['name' => 'lee']);
+    // 重定向
+    return redirect('session1');
+    return redirect('session1') -> with('message', '123');
+    return redirect() -> action('StudentController@session1') -> with();
+    return redirect() -> route('session1') -> with();
+    return redirect() -> back();
+  }
+
+  // 中间键
+  function ac1() {
+    return 1;
+  }
+  function ac2() {
+    return 2;
   }
 }

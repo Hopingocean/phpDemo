@@ -93,3 +93,6 @@ Route::get('query4', 'StudentController@query4');
 Route::get('orm1', 'StudentController@orm1');
 Route::get('orm2', 'StudentController@orm2');
 Route::get('orm3', 'StudentController@orm3');
+
+// session
+Route::get('session1', 'StudentController@session1');
